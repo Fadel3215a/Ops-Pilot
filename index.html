@@ -8,28 +8,37 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR_MEASUREMENT_ID"></script>
+  <!-- Google Analytics -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-YOUR_MEASUREMENT_ID');
+    const GA_ID = ""; // Leave empty for now, site will still work
+    if (GA_ID) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+      document.head.appendChild(script);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    }
   </script>
+
+  <!-- Meta Pixel -->
   <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'YOUR_PIXEL_ID');
-    fbq('track', 'PageView');
+    const PIXEL_ID = ""; // Leave empty for now
+    if (PIXEL_ID) {
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', PIXEL_ID);
+      fbq('track', 'PageView');
+    }
   </script>
-  <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
-  /></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -387,8 +396,8 @@
             </div>
             <div class="calendly-cta">
               <p>Ready to unlock these savings? Book a free 30-minute strategy call with our operations team.</p>
-              <a class="btn btn-success" id="calendlyBtn" href="https://calendly.com/opspilot-demo/strategy" target="_blank" rel="noopener">
-                Book Your Free Strategy Call →
+              <a class="btn btn-success" id="calendlyBtn" href="mailto:strategy@opspilot.com?subject=Strategy Call Request">
+                Book Strategy Call →
               </a>
             </div>
           </div>
@@ -496,9 +505,6 @@
         btn.innerHTML = 'Get My Free Audit →';
       }
     }
-
-    const calendlyUrl = window.CALENDLY_URL || 'https://calendly.com/opspilot-demo/strategy';
-    document.getElementById('calendlyBtn').href = calendlyUrl;
   </script>
 </body>
 </html>

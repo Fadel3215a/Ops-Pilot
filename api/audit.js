@@ -16,20 +16,21 @@ export default async function handler(req, res) {
     const resultData = { score, savings, hours };
 
     try {
+        // COMMENT THESE OUT FOR NOW IF YOU DON'T HAVE KEYS
         // 1. Send Email via Resend
-        await resend.emails.send({
-            from: 'OpsPilot <strategy@opspilot.com>',
-            to: email,
-            subject: 'Your OpsPilot Operations Audit Results',
-            html: `<h1>Audit Results</h1><p>Efficiency Score: ${score}/100</p><p>Est. Annual Savings: $${savings}</p><p>Hours Saved: ${hours}</p>`
-        });
+        // await resend.emails.send({
+        //     from: 'OpsPilot <strategy@opspilot.com>',
+        //     to: email,
+        //     subject: 'Your OpsPilot Operations Audit Results',
+        //     html: `<h1>Audit Results</h1><p>Efficiency Score: ${score}/100</p><p>Est. Annual Savings: $${savings}</p><p>Hours Saved: ${hours}</p>`
+        // });
 
         // 2. Sync to CRM (Zapier/Make/HubSpot)
-        await fetch(process.env.CRM_WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, revenue, bottleneck, ...resultData })
-        });
+        // await fetch(process.env.CRM_WEBHOOK_URL, {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ email, revenue, bottleneck, ...resultData })
+        // });
 
         return res.status(200).json(resultData);
     } catch (error) {
