@@ -1,124 +1,1012 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpsPilot | AI Operations & Automation for E-Commerce</title>
-    
-    <meta name="description" content="OpsPilot provides e-commerce operations automation, Shopify workflow automation, and AI customer support systems for mid-market DTC brands.">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpsPilot | AI Operations & Automation for E-Commerce</title>
+  <meta name="description" content="OpsPilot helps Shopify and DTC brands find revenue leaks, automate operations, and reduce support workload." />
+  <meta name="theme-color" content="#000000" />
+  <style>
+    :root{
+      --bg:#000;
+      --panel:#0a0a0a;
+      --panel2:#111;
+      --line:#222;
+      --line2:#2f2f2f;
+      --text:#fff;
+      --muted:#a3a3a3;
+      --blue:#0052ff;
+      --blue2:#0040cc;
+      --green:#22c55e;
+      --red:#f87171;
+      --yellow:#f59e0b;
+      --shadow: 0 0 50px rgba(0,82,255,.15);
+      --radius: 24px;
+      --radius2: 16px;
+      --max: 1200px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:50;
+      backdrop-filter: blur(12px);
+      background:rgba(10,10,10,.72);
+      border-bottom:1px solid #151515;
+    }
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:16px;padding:16px 0;
+    }
+    .brand{font-weight:900;letter-spacing:-.04em;font-size:28px}
+    .brand span{color:var(--blue)}
+    .nav-links{display:flex;gap:28px;align-items:center;color:var(--muted);font-size:14px;font-weight:600}
+    .nav-links a:hover,.nav-links button:hover{color:#fff}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      border-radius:14px;padding:14px 18px;border:1px solid transparent;
+      cursor:pointer;transition:.2s ease;cursor:pointer;
+      font-weight:800;
+    }
+    .btn-primary{background:var(--blue);color:#fff;box-shadow:0 0 20px rgba(0,82,255,.28)}
+    .btn-primary:hover{background:var(--blue2)}
+    .btn-secondary{background:transparent;color:#fff;border-color:#333}
+    .btn-secondary:hover{border-color:#666;background:#0d0d0d}
+    .btn-white{background:#fff;color:#000}
+    .btn-white:hover{background:#e5e5e5}
+    .hero{
+      padding-top:110px;
+      padding-bottom:40px;
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:40px;
+      align-items:center;
+    }
+    .pill{
+      display:inline-flex;
+      border:1px solid #2a2a2a;
+      background:rgba(17,17,17,.72);
+      color:#ddd;
+      border-radius:999px;
+      padding:8px 14px;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:20px;
+    }
+    h1{
+      margin:0 0 18px;
+      font-size:clamp(42px,6vw,74px);
+      line-height:1.02;
+      letter-spacing:-.05em;
+      font-weight:900;
+    }
+    .lead{
+      color:#b5b5b5;
+      font-size:clamp(18px,2vw,22px);
+      line-height:1.65;
+      max-width:580px;
+      margin-bottom:28px;
+    }
+    .actions{display:flex;flex-wrap:wrap;gap:14px}
+    .panel{
+      position:relative;
+      background:linear-gradient(180deg, rgba(10,10,10,.96), rgba(7,7,7,.96));
+      border:1px solid #232323;
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .panel::before{
+      content:"";
+      position:absolute;top:-130px;right:-130px;width:320px;height:320px;
+      background:rgba(0,82,255,.14);filter:blur(100px);border-radius:50%;
+      pointer-events:none;
+    }
+    .audit{
+      padding:28px;
+      min-height:620px;
+    }
+    .step-label{
+      font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--blue);margin-bottom:14px;
+    }
+    .question{
+      font-size:28px;line-height:1.2;margin:0 0 18px;font-weight:900;
+    }
+    .subtle{color:var(--muted);font-size:14px;line-height:1.6}
+    .choice-list{display:grid;gap:10px;margin-top:18px}
+    .choice{
+      width:100%;text-align:left;
+      padding:16px 14px;border-radius:14px;
+      border:1px solid #3a3a3a;background:#000;color:#e7e7e7;
+      cursor:pointer;font-weight:700;transition:.18s ease;
+    }
+    .choice:hover{border-color:var(--blue);background:rgba(0,82,255,.08)}
+    .choice.selected{border-color:var(--blue);background:rgba(0,82,255,.12)}
+    .input{
+      width:100%;background:#000;border:1px solid #333;color:#fff;
+      padding:14px 15px;border-radius:14px;outline:none;
+    }
+    .input:focus{border-color:var(--blue)}
+    .grid-3{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px
+    }
+    .metric{
+      background:#000;border:1px solid #262626;border-radius:16px;padding:14px;text-align:center
+    }
+    .metric .k{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#888;margin-bottom:6px}
+    .metric .v{font-size:26px;font-weight:900}
+    .metric .blue{color:#5aa2ff}
+    .metric .green{color:var(--green)}
+    .metric .yellow{color:var(--yellow)}
+    .result-box{
+      background:#000;border:1px solid #262626;border-radius:16px;padding:16px;margin-top:12px
+    }
+    .result-title{
+      font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;margin-bottom:8px
+    }
+    .tag{
+      display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800
+    }
+    .tag.good{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+    .tag.warn{background:rgba(245,158,11,.12);color:#fbbf24;border:1px solid rgba(245,158,11,.25)}
+    .tag.info{background:rgba(0,82,255,.12);color:#8cb3ff;border:1px solid rgba(0,82,255,.25)}
+    section.block{
+      padding:92px 0;
+      border-top:1px solid #151515;
+    }
+    .center{text-align:center}
+    .section-title{
+      font-size:clamp(30px,4vw,50px);
+      letter-spacing:-.05em;margin:0 0 12px;font-weight:900
+    }
+    .section-sub{color:var(--muted);max-width:760px;margin:0 auto 32px;line-height:1.7}
+    .steps{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:16px
+    }
+    .card{
+      background:#000;border:1px solid #232323;border-radius:24px;padding:22px
+    }
+    .step-num{
+      width:48px;height:48px;border-radius:999px;background:var(--blue);
+      display:flex;align-items:center;justify-content:center;font-weight:900;
+      box-shadow:0 0 16px rgba(0,82,255,.35);margin-bottom:14px
+    }
+    .card h3{margin:0 0 10px;font-size:18px}
+    .card p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+    .trust{
+      display:flex;flex-wrap:wrap;justify-content:center;gap:18px 34px;color:#d2d2d2
+    }
+    .trust span{display:flex;align-items:center;gap:10px;font-weight:700}
+    .check{
+      color:var(--blue);font-weight:900
+    }
+    .case-grid,.service-grid,.pricing-grid,.blog-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:18px
+    }
+    .case-card,.service-card,.price-card,.blog-card{
+      background:#000;border:1px solid #232323;border-radius:24px;padding:24px
+    }
+    .case-card h3,.service-card h3,.price-card h3,.blog-card h3{margin:0 0 12px}
+    .mini-label{
+      display:block;color:var(--red);font-size:12px;font-weight:800;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+    .mini-label.blue{color:#4ea0ff}
+    .case-stat{
+      display:flex;justify-content:space-between;gap:16px;border-top:1px solid #222;padding-top:12px;margin-top:12px;color:#ddd
+    }
+    .case-stat strong{color:#fff}
+    .offer{
+      display:flex;flex-direction:column;align-items:center;text-align:center;min-height:100%;
+      justify-content:space-between;gap:18px
+    }
+    .circle{
+      width:64px;height:64px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(0,82,255,.15);color:var(--blue);font-weight:900;font-size:24px
+    }
+    .highlight{
+      border:1px solid rgba(0,82,255,.5)!important;
+      box-shadow:0 0 30px rgba(0,82,255,.15)
+    }
+    .blog-card{display:flex;flex-direction:column;justify-content:space-between;min-height:185px}
+    .badge{
+      display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--blue);margin-bottom:12px
+    }
+    .footer{
+      padding:28px 0;border-top:1px solid #151515;color:#666;font-size:14px
+    }
+    .footer-row{
+      display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap
+    }
+    .footer-links{display:flex;gap:20px;flex-wrap:wrap}
+    .modal-backdrop{
+      position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;
+      padding:18px;z-index:100
+    }
+    .modal{
+      width:min(960px,100%);max-height:90vh;overflow:auto;background:#0a0a0a;border:1px solid #2a2a2a;
+      border-radius:24px;box-shadow:0 30px 100px rgba(0,0,0,.55)
+    }
+    .modal-head{
+      display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #222;
+      position:sticky;top:0;background:#0a0a0a;z-index:2
+    }
+    .modal-body{padding:24px}
+    .close{
+      background:transparent;border:0;color:#fff;font-size:28px;cursor:pointer;line-height:1
+    }
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .policy{
+      color:#bbb;line-height:1.75;font-size:14px
+    }
+    .calendly-fallback{
+      display:flex;flex-direction:column;gap:12px;background:#000;border:1px solid #262626;border-radius:16px;padding:16px
+    }
+    .notice{
+      border:1px solid rgba(245,158,11,.25);
+      background:rgba(245,158,11,.08);
+      color:#ffd88a;padding:14px 16px;border-radius:14px;font-size:14px;line-height:1.6
+    }
+    .hidden{display:none !important}
+    @media (max-width: 1024px){
+      .hero{grid-template-columns:1fr;gap:28px}
+      .steps,.case-grid,.service-grid,.pricing-grid,.blog-grid,.two-col{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 768px){
+      .nav-links{display:none}
+      .hero{padding-top:96px}
+      .audit{min-height:auto}
+      .steps,.case-grid,.service-grid,.pricing-grid,.blog-grid,.two-col{grid-template-columns:1fr}
+      .question{font-size:24px}
+      .grid-3{grid-template-columns:1fr}
+      .container{padding:0 18px}
+      .brand{font-size:24px}
+    }
+  </style>
 </head>
 <body>
-    <div id="root"></div>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">Ops<span>Pilot</span></div>
+      <nav class="nav-links">
+        <a href="#offers">Offers</a>
+        <a href="#case-studies">Case Studies</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#insights">Insights</a>
+        <button id="openBookingTop" class="btn btn-secondary" type="button">Book Strategy Call</button>
+      </nav>
+    </div>
+  </header>
 
-    <script>
-        const e = React.createElement;
-        const useState = React.useState;
+  <main>
+    <section class="container hero">
+      <div>
+        <div class="pill">For Shopify & DTC Brands ($1M-$10M)</div>
+        <h1>Your Store Is Losing Money Every Day. Find Out Where.</h1>
+        <p class="lead">Run a free AI-powered operations audit and discover hidden inefficiencies, manual processes, customer support bottlenecks, and revenue leaks inside your business.</p>
+        <div class="actions">
+          <button class="btn btn-primary" type="button" id="scrollAudit">Run Free Operations Audit</button>
+          <button class="btn btn-secondary" type="button" id="scrollCases">View Case Studies</button>
+        </div>
+        <div style="margin-top:28px;border-top:1px solid #222;padding-top:22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+          <div style="display:flex;gap:8px;align-items:center;color:#d6d6d6;font-size:14px;font-weight:700">
+            <div style="width:40px;height:40px;border-radius:999px;background:#1a1a1a;border:1px solid #333;display:flex;align-items:center;justify-content:center">1</div>
+            Built for mid-market e-commerce teams.
+          </div>
+        </div>
+      </div>
 
-        const App = () => {
-            const [step, setStep] = useState(1);
-            const [auditData, setAuditData] = useState({ 
-                revenue: '', employees: '', tickets: '', bottleneck: '', software: '', email: '', name: '' 
-            });
-            const [isCalculating, setIsCalculating] = useState(false);
-            const [result, setResult] = useState(null);
+      <div id="audit-tool" class="panel audit">
+        <div class="step-label" id="stepLabel">Audit • Step 1 of 6</div>
+        <div id="auditContent"></div>
+      </div>
+    </section>
 
-            const updateField = (key, val) => setAuditData(prev => ({ ...prev, [key]: val }));
+    <section class="block">
+      <div class="container">
+        <div class="center">
+          <h2 class="section-title">How OpsPilot Works</h2>
+          <p class="section-sub">From chaos to clarity in five transparent steps.</p>
+        </div>
+        <div class="steps">
+          <div class="card"><div class="step-num">01</div><h3>Run Free Revenue Leak Audit</h3><p>Complete a 2-minute diagnostic and identify bottlenecks.</p></div>
+          <div class="card"><div class="step-num">02</div><h3>Receive AI Analysis</h3><p>See estimated savings, hours saved, and automation opportunities.</p></div>
+          <div class="card"><div class="step-num">03</div><h3>Book Strategy Call</h3><p>Review the report and talk through your implementation plan.</p></div>
+          <div class="card"><div class="step-num">04</div><h3>Implement Systems</h3><p>Deploy CRM cleanup, support automation, and workflows.</p></div>
+          <div class="card"><div class="step-num">05</div><h3>Recover Time & Revenue</h3><p>Reduce manual work and improve operational visibility.</p></div>
+        </div>
+      </div>
+    </section>
 
-            const submitAudit = async () => {
-                setIsCalculating(true);
-                setStep(7);
-                try {
-                    const response = await fetch('/api/audit', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(auditData)
-                    });
-                    const data = await response.json();
-                    setResult(data);
-                } catch (err) {
-                    setResult({ efficiencyScore: 48, estSavings: "$36,500", estHoursSaved: 45 });
-                } finally {
-                    setIsCalculating(false);
-                }
-            };
+    <section class="block" style="padding-top:0">
+      <div class="container center">
+        <h3 class="section-title" style="font-size:22px;margin-bottom:22px">Why E-commerce Operators Work With OpsPilot</h3>
+        <div class="trust">
+          <span><span class="check">✓</span> Faster Support Response</span>
+          <span><span class="check">✓</span> Reduced Manual Work</span>
+          <span><span class="check">✓</span> Cleaner Customer Data</span>
+          <span><span class="check">✓</span> Better Reporting Visibility</span>
+          <span><span class="check">✓</span> Scalable Operations</span>
+        </div>
+      </div>
+    </section>
 
-            const renderAuditForm = () => {
-                if (step === 1) return e('div', {className: 'space-y-4'}, 
-                    e('h2', {className: 'text-xl font-bold mb-4'}, '1. Annual Revenue?'),
-                    ['$1M - $3M', '$3M - $5M', '$5M - $10M+'].map(o => 
-                        e('button', {key: o, onClick: () => {updateField('revenue', o); setStep(2);}, className: 'w-full p-4 border border-gray-700 rounded-xl hover:border-blue-500 text-left transition mb-2'}, o)
-                    )
-                );
-                if (step === 2) return e('div', {className: 'space-y-4'}, 
-                    e('h2', {className: 'text-xl font-bold mb-4'}, '2. Number of Employees?'),
-                    ['1-10', '10-50', '50+'].map(o => 
-                        e('button', {key: o, onClick: () => {updateField('employees', o); setStep(3);}, className: 'w-full p-4 border border-gray-700 rounded-xl hover:border-blue-500 text-left transition mb-2'}, o)
-                    )
-                );
-                if (step === 3) return e('div', {className: 'space-y-4'}, 
-                    e('h2', {className: 'text-xl font-bold mb-4'}, '3. Monthly Support Tickets?'),
-                    ['<500', '500-2,000', '2,000+'].map(o => 
-                        e('button', {key: o, onClick: () => {updateField('tickets', o); setStep(4);}, className: 'w-full p-4 border border-gray-700 rounded-xl hover:border-blue-500 text-left transition mb-2'}, o)
-                    )
-                );
-                if (step === 4) return e('div', {className: 'space-y-4'}, 
-                    e('h2', {className: 'text-xl font-bold mb-4'}, '4. Main Bottleneck?'),
-                    e('input', {onChange: (e) => updateField('bottleneck', e.target.value), className: 'w-full p-4 mb-4 bg-black border border-gray-700 rounded-xl', placeholder: 'e.g. Shipping delays'}),
-                    e('button', {onClick: () => setStep(5), className: 'w-full py-3 bg-blue-600 rounded-xl font-bold'}, 'Next')
-                );
-                if (step === 5) return e('div', {className: 'space-y-4'}, 
-                    e('h2', {className: 'text-xl font-bold mb-4'}, '5. Tech Stack?'),
-                    e('input', {onChange: (e) => updateField('software', e.target.value), className: 'w-full p-4 mb-4 bg-black border border-gray-700 rounded-xl', placeholder: 'e.g. Shopify, Gorgias'}),
-                    e('button', {onClick: () => setStep(6), className: 'w-full py-3 bg-blue-600 rounded-xl font-bold'}, 'Next')
-                );
-                if (step === 6) return e('div', {className: 'space-y-4'}, 
-                    e('h2', {className: 'text-xl font-bold mb-4'}, '6. Final Details'),
-                    e('input', {onChange: (e) => updateField('name', e.target.value), className: 'w-full p-4 mb-2 bg-black border border-gray-700 rounded-xl', placeholder: 'Full Name'}),
-                    e('input', {onChange: (e) => updateField('email', e.target.value), className: 'w-full p-4 mb-4 bg-black border border-gray-700 rounded-xl', placeholder: 'Email'}),
-                    e('button', {onClick: submitAudit, className: 'w-full py-3 bg-blue-600 rounded-xl font-bold'}, 'Run Audit')
-                );
-                return e('div', {className: 'text-center'},
-                    isCalculating ? e('p', null, 'Analyzing your data...') : 
-                    e('div', null,
-                        e('h2', {className: 'text-4xl font-bold text-blue-500 mb-4'}, result.efficiencyScore + '/100'),
-                        e('p', null, 'Est. Annual Savings: ' + result.estSavings),
-                        e('p', null, 'Est. Hours Saved: ' + result.estHoursSaved + ' hrs/mo')
-                    )
-                );
-            };
+    <section class="block" id="case-studies">
+      <div class="container">
+        <div class="center">
+          <h2 class="section-title">Proven E-Commerce Results</h2>
+          <p class="section-sub">Realistic outcomes from mid-market brands automating their operations.</p>
+        </div>
+        <div class="case-grid">
+          <article class="case-card">
+            <h3>Mid-Market Apparel Brand</h3>
+            <span class="mini-label">Challenge</span>
+            <p class="subtle">Support team overwhelmed by repetitive sizing and shipping tickets.</p>
+            <span class="mini-label blue" style="margin-top:14px">Solution</span>
+            <p class="subtle">Implemented AI support automation and automated CRM ticket routing.</p>
+            <div class="case-stat"><span>Annual Savings</span><strong>$38,000</strong></div>
+            <div class="case-stat"><span>Monthly Hours Saved</span><strong>31 Hours</strong></div>
+            <div class="case-stat"><span>Support Speed</span><strong style="color:var(--green)">72% Faster</strong></div>
+          </article>
+          <article class="case-card highlight">
+            <h3>High-Growth DTC Brand</h3>
+            <span class="mini-label">Challenge</span>
+            <p class="subtle">Messy customer data causing high cart abandonment and lost repurchases.</p>
+            <span class="mini-label blue" style="margin-top:14px">Solution</span>
+            <p class="subtle">Built CRM cleanup pipelines and triggered targeted retention workflows.</p>
+            <div class="case-stat"><span>Recovered Revenue</span><strong style="color:#8cb3ff">$47,000</strong></div>
+            <div class="case-stat"><span>Monthly Hours Saved</span><strong>34 Hours</strong></div>
+            <div class="case-stat"><span>Email Conversion</span><strong style="color:var(--green)">+18%</strong></div>
+          </article>
+          <article class="case-card">
+            <h3>E-commerce Home Goods</h3>
+            <span class="mini-label">Challenge</span>
+            <p class="subtle">Manual data entry between Shopify and global fulfillment suppliers.</p>
+            <span class="mini-label blue" style="margin-top:14px">Solution</span>
+            <p class="subtle">Deployed API integrations directly linking storefront to warehouse.</p>
+            <div class="case-stat"><span>Operational Savings</span><strong>$29,000</strong></div>
+            <div class="case-stat"><span>Monthly Hours Saved</span><strong>22 Hours</strong></div>
+            <div class="case-stat"><span>Manual Processes</span><strong style="color:var(--green)">-40%</strong></div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-            return e('div', {className: 'min-h-screen flex flex-col'},
-                e('main', {className: 'flex-grow flex flex-col items-center justify-center p-6'},
-                    e('div', {className: 'max-w-2xl w-full text-center mb-12'},
-                        e('h1', {className: 'text-5xl md:text-6xl font-extrabold mb-6'}, 'Your Store Is Losing Money.'),
-                        e('p', {className: 'text-xl text-gray-400'}, 'Run a free AI operations audit to find out where.')
-                    ),
-                    e('div', {className: 'max-w-lg w-full bg-[#0A0A0A] border border-gray-800 rounded-3xl p-8 shadow-2xl min-h-[400px]'}, renderAuditForm())
-                ),
-                e('footer', {className: 'bg-black py-12 border-t border-gray-900'},
-                    e('div', {className: 'max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600'},
-                        e('div', null, '© ' + new Date().getFullYear() + ' OpsPilot. E-commerce Operations Automation.'),
-                        e('div', {className: 'mt-4 md:mt-0 flex space-x-6'},
-                            e('a', {href: '#', className: 'hover:text-gray-300'}, 'Privacy'),
-                            e('a', {href: '#', className: 'hover:text-gray-300'}, 'Terms')
-                        )
-                    )
-                )
-            );
-        };
+    <section class="block" id="offers">
+      <div class="container">
+        <div class="center">
+          <h2 class="section-title">Outcomes, Not Services</h2>
+          <p class="section-sub">We don't sell hours. We sell operational transformations.</p>
+        </div>
+        <div class="service-grid">
+          <article class="service-card offer">
+            <div class="circle">1</div>
+            <div>
+              <h3>Free Revenue Leak Audit</h3>
+              <p class="subtle">A complete diagnostic of your operational bottlenecks, highlighting cost savings and automation opportunities.</p>
+            </div>
+            <button class="btn btn-white open-booking" type="button">Start Free Audit</button>
+          </article>
+          <article class="service-card offer highlight">
+            <div class="circle">2</div>
+            <div>
+              <h3>90-Day Operations Transformation</h3>
+              <p class="subtle">Full implementation of AI customer support, CRM cleanup, and automated workflows designed to increase margins.</p>
+            </div>
+            <button class="btn btn-primary open-booking" type="button">Book Strategy Call</button>
+          </article>
+          <article class="service-card offer">
+            <div class="circle">3</div>
+            <div>
+              <h3>Client Intelligence Portal</h3>
+              <p class="subtle">Private reports, trends, and recommendations for active clients only.</p>
+            </div>
+            <button class="btn btn-secondary open-portal" type="button">Preview Portal</button>
+          </article>
+        </div>
+      </div>
+    </section>
 
-        const container = document.getElementById('root');
-        const root = ReactDOM.createRoot(container);
-        root.render(e(App));
-    </script>
+    <section class="block" id="pricing">
+      <div class="container">
+        <div class="center">
+          <h2 class="section-title">Partnership Programs</h2>
+          <p class="section-sub">Custom pricing based on business complexity. We build systems that pay for themselves.</p>
+        </div>
+        <div class="pricing-grid">
+          <article class="price-card">
+            <h3>Starter Operations Audit</h3>
+            <p class="subtle">A deep dive into your current processes to build an automation roadmap.</p>
+            <div style="margin-top:18px"><button class="btn btn-secondary open-booking" type="button">Book Strategy Call</button></div>
+          </article>
+          <article class="price-card highlight">
+            <div class="tag info" style="margin-bottom:12px">Most Popular</div>
+            <h3>Growth Automation Program</h3>
+            <p class="subtle">Full implementation of AI support, workflow automation, and CRM optimizations.</p>
+            <div style="margin-top:18px"><button class="btn btn-primary open-booking" type="button">Book Strategy Call</button></div>
+          </article>
+          <article class="price-card">
+            <h3>Enterprise Transformation</h3>
+            <p class="subtle">Dedicated operations engineering and custom BI dashboards for complex multi-channel brands.</p>
+            <div style="margin-top:18px"><button class="btn btn-secondary open-booking" type="button">Book Strategy Call</button></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="insights">
+      <div class="container">
+        <div class="center">
+          <h2 class="section-title">Operations Insights</h2>
+          <p class="section-sub">Strategies to scale your Shopify brand.</p>
+        </div>
+        <div class="blog-grid" id="blogGrid"></div>
+        <div class="center" style="margin-top:26px">
+          <button class="btn btn-secondary" type="button" id="openBlogModal">View All 30+ Articles</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <div>&copy; <span id="year"></span> OpsPilot. E-commerce Operations Automation.</div>
+      <div class="footer-links">
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+        <a href="mailto:hello@opspilot.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="bookingModal" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-head">
+        <strong>Schedule Strategy Call</strong>
+        <button class="close" id="closeBooking" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="notice">
+          Add your real Calendly link in the code variable named CALENDLY_URL.
+          If the link is not set, the button below will open a clean fallback contact flow.
+        </div>
+        <div style="height:16px"></div>
+        <div id="calendlyContainer" class="calendly-fallback">
+          <p style="margin:0;color:#ddd;line-height:1.6">Book directly on your calendar after the audit. This is where your real scheduling link will go.</p>
+          <button class="btn btn-primary" id="openCalendly" type="button">Open Booking Link</button>
+        </div>
+        <div style="height:18px"></div>
+        <form id="leadForm" class="two-col">
+          <div>
+            <label class="subtle" for="name">Name</label><br />
+            <input class="input" id="name" required placeholder="Your name" />
+          </div>
+          <div>
+            <label class="subtle" for="email">Work Email</label><br />
+            <input class="input" id="email" required type="email" placeholder="founder@company.com" />
+          </div>
+          <div>
+            <label class="subtle" for="website">Company Website</label><br />
+            <input class="input" id="website" required placeholder="https://..." />
+          </div>
+          <div>
+            <label class="subtle" for="challenge">Biggest Operational Challenge</label><br />
+            <input class="input" id="challenge" required placeholder="Support overload, CRM cleanup, etc." />
+          </div>
+          <div>
+            <label class="subtle" for="revenue">Revenue Range</label><br />
+            <select class="input" id="revenue" required>
+              <option value="">Select...</option>
+              <option value="$1M-$3M">$1M-$3M</option>
+              <option value="$3M-$5M">$3M-$5M</option>
+              <option value="$5M-$10M">$5M-$10M</option>
+            </select>
+          </div>
+          <div>
+            <label class="subtle" for="team">Team Size</label><br />
+            <select class="input" id="team" required>
+              <option value="">Select...</option>
+              <option value="1-10">1-10</option>
+              <option value="11-50">11-50</option>
+              <option value="50+">50+</option>
+            </select>
+          </div>
+          <div style="grid-column:1/-1">
+            <button class="btn btn-primary" type="submit">Save Lead</button>
+          </div>
+        </form>
+        <div id="leadSaved" class="result-box hidden">
+          <div class="tag good">Lead saved locally</div>
+          <p class="subtle" style="margin-top:10px">Connect Resend and HubSpot in your backend to turn this into a real automated booking flow.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="portalModal" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-head">
+        <strong>Client Intelligence Portal</strong>
+        <button class="close" id="closePortal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="policy">This portal is a placeholder for active clients. Hide this section until authentication is connected, or wire it to Clerk/Firebase Auth.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="blogModal" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-head">
+        <strong>30+ Article Library</strong>
+        <button class="close" id="closeBlogModal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="blogFullGrid" class="blog-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="privacy" class="block">
+    <div class="container">
+      <h2 class="section-title">Privacy Policy</h2>
+      <p class="policy">
+        OpsPilot collects contact details, company details, and audit inputs only to generate recommendations, communicate with you, and manage sales follow-up.
+        Add your final legal copy before going live.
+      </p>
+    </div>
+  </section>
+
+  <section id="terms" class="block" style="padding-top:0">
+    <div class="container">
+      <h2 class="section-title">Terms</h2>
+      <p class="policy">
+        This site is a lead generation and consulting platform. Add your business terms, disclaimers, and service agreement language before launch.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const CALENDLY_URL = "https://calendly.com/your-booking-link";
+    const STORAGE_KEY = "opspilot_leads";
+    const AUDIT_KEY = "opspilot_audit";
+    const ARTICLES = [
+      ["Shopify Automation", "The Ultimate Guide to Shopify Workflow Automation in 2026"],
+      ["AI Customer Support", "How to Use AI to Reduce Resolution Times by 80%"],
+      ["CRM Cleanup", "The Hidden Key to Recovering $50k in Lost Revenue"],
+      ["Revenue Recovery", "Why Manual Processes Are Killing Your Profit Margins"],
+      ["E-commerce Operations", "Building a Scaling Blueprint for $10M DTC Brands"],
+      ["Workflow Automation", "Stop Doing Grunt Work: 5 Zaps Every Store Needs"],
+      ["AI Support", "When to Replace Tier-1 Support With Automation"],
+      ["Operations", "5 Metrics Every Shopify Founder Should Watch Weekly"],
+      ["CRM", "How to Fix Messy Customer Data Before It Hurts Growth"],
+      ["Retention", "Recover More Revenue With Better Post-Purchase Workflows"],
+      ["Reporting", "Why Your Spreadsheet Reporting Is Slowing You Down"],
+      ["Automation", "How to Cut Internal Admin Work Without Hiring"],
+      ["Shopify", "Building a Cleaner Order-to-Fulfillment Pipeline"],
+      ["Support", "Designing a Support Workflow That Does Not Break"],
+      ["Growth", "How Better Ops Improve Conversion and LTV"],
+      ["DTC", "The Operating System Every DTC Brand Needs"],
+      ["Analytics", "Turning Raw E-commerce Data Into Decisions"],
+      ["Process", "A Practical Framework for Mapping Business Bottlenecks"],
+      ["Revenue", "How Revenue Leaks Hide in Plain Sight"],
+      ["Systems", "The Minimum Viable Ops Stack for Growing Brands"],
+      ["Shopify", "Eliminate Manual Fulfillment Handoffs"],
+      ["Automation", "How to Prioritize the Right Workflows First"],
+      ["Support", "AI Answers for the 20 Questions Customers Ask Most"],
+      ["CRM", "Segmentation That Actually Improves Retention"],
+      ["Ops", "The Cost of Slow Response Times"],
+      ["BI", "Dashboards That Owners Actually Use"],
+      ["Workflow", "Building Reliable Handovers Between Teams"],
+      ["E-commerce", "Operational Benchmarks for Mid-Market Brands"],
+      ["Revenue", "Recover Lost Orders Without Adding Headcount"],
+      ["OpsPilot", "A Founder’s Guide to Operations Automation"]
+    ];
+
+    const auditState = {
+      revenue: null,
+      employees: null,
+      tickets: null,
+      bottleneck: null,
+      software: null,
+      email: ""
+    };
+
+    const steps = [
+      {
+        label: "Audit • Step 1 of 6",
+        render: () => `
+          <div class="question">What is your current annual revenue?</div>
+          <div class="choice-list">
+            ${choiceButtons(["$1M - $3M", "$3M - $5M", "$5M - $10M+"], "revenue")}
+          </div>
+        `
+      },
+      {
+        label: "Audit • Step 2 of 6",
+        render: () => `
+          <div class="question">Number of employees?</div>
+          <div class="choice-list">
+            ${choiceButtons(["1-10", "11-50", "50+"], "employees")}
+          </div>
+        `
+      },
+      {
+        label: "Audit • Step 3 of 6",
+        render: () => `
+          <div class="question">Monthly customer support tickets?</div>
+          <div class="choice-list">
+            ${choiceButtons(["Under 500", "500 - 2,000", "2,000+"], "tickets")}
+          </div>
+        `
+      },
+      {
+        label: "Audit • Step 4 of 6",
+        render: () => `
+          <div class="question">Biggest operational bottleneck?</div>
+          <div class="choice-list">
+            ${choiceButtons(["Customer Support Overload", "Messy CRM & Data Entry", "Fulfillment & Inventory Tracking"], "bottleneck")}
+          </div>
+        `
+      },
+      {
+        label: "Audit • Step 5 of 6",
+        render: () => `
+          <div class="question">Current software stack?</div>
+          <div class="choice-list">
+            ${choiceButtons(["Shopify + Basic Apps", "Shopify + Gorgias + Klaviyo", "Custom / Enterprise ERP"], "software")}
+          </div>
+        `
+      },
+      {
+        label: "Audit • Step 6 of 6",
+        render: () => `
+          <div class="question">Analysis ready.</div>
+          <p class="subtle">Enter your work email to generate your Efficiency Score and projected ROI.</p>
+          <div style="height:14px"></div>
+          <input id="auditEmail" class="input" type="email" placeholder="founder@ecommerce.com" value="${escapeHtml(auditState.email)}" />
+          <div style="height:14px"></div>
+          <button class="btn btn-primary" id="runAuditBtn" type="button" style="width:100%">View My Audit Results</button>
+        `
+      },
+      {
+        label: "Analyzing Operational Inefficiencies...",
+        renderLoading: () => `
+          <div style="padding:24px 0;text-align:center">
+            <div style="width:64px;height:64px;border:4px solid var(--blue);border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 18px"></div>
+            <h3 style="margin:0 0 8px;font-size:22px">Analyzing Operational Inefficiencies...</h3>
+            <p class="subtle">Identifying revenue leaks and automation opportunities.</p>
+          </div>
+        `,
+        renderResult: (result) => `
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+              <div class="tag good">Audit Complete</div>
+              <div class="subtle">Report ready for ${escapeHtml(auditState.email)}</div>
+            </div>
+            <div style="height:14px"></div>
+            <div class="grid-3">
+              <div class="metric"><div class="k">Score</div><div class="v ${result.score >= 70 ? 'green' : 'yellow'}">${result.score}</div></div>
+              <div class="metric"><div class="k">Savings</div><div class="v blue">${formatCurrency(result.savings)}</div></div>
+              <div class="metric"><div class="k">Hours</div><div class="v">${result.hours}</div></div>
+            </div>
+            <div class="result-box">
+              <div class="result-title" style="color:var(--red)">Primary Bottleneck</div>
+              <div class="subtle" style="color:#e7e7e7">${escapeHtml(result.bottleneckDetail)}</div>
+            </div>
+            <div class="result-box">
+              <div class="result-title" style="color:var(--blue)">Automation Opportunities</div>
+              <ul style="margin:0;padding-left:18px;color:#ddd;line-height:1.7">
+                ${result.opportunities.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="result-box">
+              <div class="result-title">Recommended Next Steps</div>
+              <ul style="margin:0;padding-left:18px;color:#ddd;line-height:1.7">
+                ${result.recommendations.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="result-box">
+              <h3 style="margin:0 0 10px">Ready to fix these leaks?</h3>
+              <p class="subtle">Book your strategy call directly below.</p>
+              <div style="height:12px"></div>
+              <div class="calendly-fallback">
+                <button class="btn btn-primary open-booking" type="button">Book Free Strategy Call</button>
+                <button class="btn btn-secondary" type="button" id="copyReportBtn">Copy Report Summary</button>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    let currentStep = 0;
+    let cachedResult = null;
+
+    const auditContent = document.getElementById("auditContent");
+    const stepLabel = document.getElementById("stepLabel");
+    const year = document.getElementById("year");
+    const bookingModal = document.getElementById("bookingModal");
+    const portalModal = document.getElementById("portalModal");
+    const blogModal = document.getElementById("blogModal");
+    const leadSaved = document.getElementById("leadSaved");
+
+    year.textContent = new Date().getFullYear();
+
+    document.getElementById("scrollAudit").addEventListener("click", () => document.getElementById("audit-tool").scrollIntoView({behavior:"smooth"}));
+    document.getElementById("scrollCases").addEventListener("click", () => document.getElementById("case-studies").scrollIntoView({behavior:"smooth"}));
+    document.getElementById("openBookingTop").addEventListener("click", openBooking);
+    document.querySelectorAll(".open-booking").forEach(btn => btn.addEventListener("click", openBooking));
+    document.querySelector(".open-portal").addEventListener("click", openPortal);
+    document.getElementById("openBlogModal").addEventListener("click", openBlogModal);
+    document.getElementById("closeBooking").addEventListener("click", closeBooking);
+    document.getElementById("closePortal").addEventListener("click", closePortal);
+    document.getElementById("closeBlogModal").addEventListener("click", closeBlogModal);
+    document.getElementById("openCalendly").addEventListener("click", () => {
+      if (CALENDLY_URL && CALENDLY_URL.includes("calendly.com") && !CALENDLY_URL.includes("your-booking-link")) {
+        window.open(CALENDLY_URL, "_blank", "noopener,noreferrer");
+      } else {
+        alert("Add your real Calendly URL in CALENDLY_URL inside the code.");
+      }
+    });
+
+    function openBooking(){ bookingModal.style.display="flex"; bookingModal.setAttribute("aria-hidden","false"); }
+    function closeBooking(){ bookingModal.style.display="none"; bookingModal.setAttribute("aria-hidden","true"); }
+    function openPortal(){ portalModal.style.display="flex"; portalModal.setAttribute("aria-hidden","false"); }
+    function closePortal(){ portalModal.style.display="none"; portalModal.setAttribute("aria-hidden","true"); }
+    function openBlogModal(){ blogModal.style.display="flex"; blogModal.setAttribute("aria-hidden","false"); }
+    function closeBlogModal(){ blogModal.style.display="none"; blogModal.setAttribute("aria-hidden","true"); }
+
+    [bookingModal, portalModal, blogModal].forEach(modal => {
+      modal.addEventListener("click", e => { if (e.target === modal) modal.style.display = "none"; });
+    });
+
+    function choiceButtons(options, key){
+      return options.map(opt => `
+        <button class="choice ${auditState[key] === opt ? 'selected' : ''}" type="button" data-key="${key}" data-value="${escapeAttr(opt)}">${escapeHtml(opt)}</button>
+      `).join("");
+    }
+
+    function renderStep(){
+      stepLabel.textContent = steps[currentStep].label;
+      if (currentStep === 6) {
+        auditContent.innerHTML = cachedResult ? steps[6].renderResult(cachedResult) : steps[6].renderLoading();
+      } else {
+        auditContent.innerHTML = steps[currentStep].render();
+      }
+
+      document.querySelectorAll(".choice").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const key = btn.dataset.key;
+          const val = btn.dataset.value;
+          auditState[key] = val;
+          saveAuditDraft();
+          currentStep += 1;
+          cachedResult = null;
+          renderStep();
+        });
+      });
+
+      const emailInput = document.getElementById("auditEmail");
+      if (emailInput) {
+        emailInput.addEventListener("input", e => {
+          auditState.email = e.target.value.trim();
+          saveAuditDraft();
+        });
+      }
+
+      const runAuditBtn = document.getElementById("runAuditBtn");
+      if (runAuditBtn) {
+        runAuditBtn.addEventListener("click", runAudit);
+      }
+
+      const copyReportBtn = document.getElementById("copyReportBtn");
+      if (copyReportBtn) {
+        copyReportBtn.addEventListener("click", async () => {
+          const text = buildReportText(cachedResult);
+          try{
+            await navigator.clipboard.writeText(text);
+            copyReportBtn.textContent = "Copied";
+            setTimeout(() => copyReportBtn.textContent = "Copy Report Summary", 1400);
+          } catch {
+            alert("Copy failed. Your browser may block clipboard access.");
+          }
+        });
+      }
+
+      document.querySelectorAll(".open-booking").forEach(btn => {
+        btn.addEventListener("click", openBooking);
+      });
+    }
+
+    function saveAuditDraft(){
+      localStorage.setItem(AUDIT_KEY, JSON.stringify(auditState));
+    }
+
+    function loadAuditDraft(){
+      try{
+        const saved = JSON.parse(localStorage.getItem(AUDIT_KEY) || "null");
+        if (saved && typeof saved === "object") Object.assign(auditState, saved);
+      } catch {}
+    }
+
+    function revenueScore(revenue){
+      if (revenue === "$5M - $10M+") return 22;
+      if (revenue === "$3M - $5M") return 30;
+      return 38;
+    }
+
+    function employeeScore(employees){
+      if (employees === "50+") return 12;
+      if (employees === "11-50") return 20;
+      return 28;
+    }
+
+    function ticketScore(tickets){
+      if (tickets === "2,000+") return 10;
+      if (tickets === "500 - 2,000") return 18;
+      return 26;
+    }
+
+    function bottleneckAdjustment(bottleneck){
+      if (bottleneck === "Customer Support Overload") return { score: 18, savings: 13000, hours: 14, detail: "Support volume is creating repeated manual work and delayed responses.", opportunities: ["Automated ticket triage", "AI support replies for tier-1 requests"] };
+      if (bottleneck === "Messy CRM & Data Entry") return { score: 14, savings: 16000, hours: 16, detail: "Disconnected systems are creating bad data, missed segments, and repeated cleanup work.", opportunities: ["CRM cleanup pipeline", "Automated segmentation and tagging"] };
+      return { score: 16, savings: 18000, hours: 18, detail: "Fulfillment handoffs are forcing manual re-entry and slowing order processing.", opportunities: ["Shopify to fulfillment sync", "Inventory alert automation"] };
+    }
+
+    function softwareAdjustment(software){
+      if (software === "Custom / Enterprise ERP") return { score: 8, savings: 6000, hours: 6 };
+      if (software === "Shopify + Gorgias + Klaviyo") return { score: 12, savings: 9000, hours: 9 };
+      return { score: 16, savings: 12000, hours: 12 };
+    }
+
+    function runAudit(){
+      if (!auditState.email) {
+        alert("Enter your work email first.");
+        return;
+      }
+
+      const bottleneck = bottleneckAdjustment(auditState.bottleneck);
+      const software = softwareAdjustment(auditState.software);
+      const score = Math.min(96, revenueScore(auditState.revenue) + employeeScore(auditState.employees) + ticketScore(auditState.tickets) + bottleneck.score + software.score);
+      const savings = bottleneck.savings + software.savings + (score < 55 ? 5000 : 9000);
+      const hours = bottleneck.hours + software.hours + (auditState.tickets === "2,000+" ? 10 : 6);
+      const result = {
+        score,
+        savings,
+        hours,
+        bottleneckDetail: bottleneck.detail,
+        opportunities: bottleneck.opportunities,
+        recommendations: [
+          "Implement the highest-impact workflow automation first.",
+          "Connect support, CRM, and fulfillment into one clean operating system.",
+          "Book a strategy call to map the 90-day implementation plan."
+        ]
+      };
+
+      cachedResult = result;
+      currentStep = 6; // show loading state first
+      stepLabel.textContent = steps[5].label;
+      auditContent.innerHTML = steps[6].renderLoading();
+
+      setTimeout(() => {
+        auditContent.innerHTML = steps[6].renderResult(result);
+        stepLabel.textContent = "Audit Complete";
+        const leads = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        leads.unshift({
+          createdAt: new Date().toISOString(),
+          email: auditState.email,
+          revenue: auditState.revenue,
+          employees: auditState.employees,
+          tickets: auditState.tickets,
+          bottleneck: auditState.bottleneck,
+          software: auditState.software,
+          result
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(leads.slice(0, 200)));
+      }, 1100);
+    }
+
+    function buildReportText(result){
+      if (!result) return "OpsPilot audit summary";
+      return [
+        "OpsPilot Audit Summary",
+        `Score: ${result.score}/100`,
+        `Estimated Savings: ${formatCurrency(result.savings)}`,
+        `Estimated Hours Saved: ${result.hours}`,
+        `Primary Bottleneck: ${result.bottleneckDetail}`,
+        `Opportunities: ${result.opportunities.join("; ")}`
+      ].join("\n");
+    }
+
+    function formatCurrency(n){
+      return "$" + Number(n).toLocaleString("en-US");
+    }
+
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function escapeAttr(str){
+      return String(str ?? "").replaceAll('"', "&quot;");
+    }
+
+    function renderBlog(){
+      const cards = ARTICLES.map(([tag, title]) => `
+        <article class="blog-card">
+          <div>
+            <div class="badge">${escapeHtml(tag)}</div>
+            <h3>${escapeHtml(title)}</h3>
+          </div>
+          <div class="subtle">Read Article →</div>
+        </article>
+      `).join("");
+      document.getElementById("blogGrid").innerHTML = cards.slice(0, 6);
+      document.getElementById("blogFullGrid").innerHTML = cards;
+    }
+
+    document.getElementById("leadForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const lead = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        website: document.getElementById("website").value.trim(),
+        challenge: document.getElementById("challenge").value.trim(),
+        revenue: document.getElementById("revenue").value,
+        team: document.getElementById("team").value,
+        createdAt: new Date().toISOString()
+      };
+
+      const leads = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      leads.unshift(lead);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads.slice(0, 200)));
+
+      leadSaved.classList.remove("hidden");
+      setTimeout(() => {
+        leadSaved.classList.add("hidden");
+        closeBooking();
+      }, 1500);
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        closeBooking();
+        closePortal();
+        closeBlogModal();
+      }
+    });
+
+    loadAuditDraft();
+    renderBlog();
+    renderStep();
+    window.addEventListener("resize", () => {
+      // keep layout smooth, no-op
+    });
+  </script>
+  <style>
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  </style>
 </body>
 </html>
