@@ -15,7 +15,8 @@
     "build": "node scripts/build-ui.mjs",
     "dev": "node scripts/build-ui.mjs && tsx scripts/dev-server.ts",
     "start": "tsx scripts/dev-server.ts",
-    "typecheck": "tsc -p src/scanner/tsconfig.json --noEmit && tsc -p src/engine/tsconfig.json --noEmit && tsc -p src/ui/tsconfig.json --noEmit && tsc -p tsconfig.server.json",
+    "typecheck": "tsc -p src/scanner/tsconfig.json --noEmit && tsc -p src/engine/tsconfig.json --noEmit && tsc -p src/ui/tsconfig.json --noEmit && tsc -p tsconfig.server.json && tsc -p src/telemetry/auth/tsconfig.json",
+    "test:auth": "tsx src/telemetry/auth/test.ts",
     "verify": "node scripts/verify-ui.mjs"
   }
 }
