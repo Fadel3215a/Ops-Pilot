@@ -2,12 +2,20 @@
   "name": "opspilot-site",
   "version": "1.0.0",
   "dependencies": {
+    "playwright": "^1.63.0",
     "resend": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.5.1",
-    "playwright": "^1.63.0",
+    "esbuild": "^0.28.2",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
+  },
+  "scripts": {
+    "build": "node scripts/build-ui.mjs",
+    "dev": "node scripts/build-ui.mjs && tsx scripts/dev-server.ts",
+    "start": "tsx scripts/dev-server.ts",
+    "typecheck": "tsc -p src/scanner/tsconfig.json --noEmit && tsc -p src/engine/tsconfig.json --noEmit && tsc -p src/ui/tsconfig.json --noEmit && tsc -p tsconfig.server.json",
+    "verify": "node scripts/verify-ui.mjs"
   }
 }

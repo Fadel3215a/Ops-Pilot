@@ -82,7 +82,10 @@ async function runScan(url: string): Promise<ScanResult> {
   }
 }
 
-export async function scanUrl(url: string): Promise<ScanResult> {
+export async function scanUrl(
+  url: string,
+  options?: { signal?: AbortSignal },
+): Promise<ScanResult> {
   return new Promise<ScanResult>((resolve) => {
     const hardTimer = setTimeout(() => {
       const result = emptyScanResult(url);
@@ -90,13 +93,29 @@ export async function scanUrl(url: string): Promise<ScanResult> {
       resolve(result);
     }, SCAN_TIMEOUT_MS);
 
+    const abort = (): void => {
+      clearTimeout(hardTimer);
+      const result = emptyScanResult(url);
+      result.error = 'Scan aborted by caller';
+      resolve(result);
+    };
+
+    const signal = options?.signal;
+    if (signal?.aborted) {
+      abort();
+      return;
+    }
+    signal?.addEventListener('abort', abort, { once: true });
+
     void runScan(url)
       .then((result) => {
         clearTimeout(hardTimer);
+        signal?.removeEventListener('abort', abort);
         resolve(result);
       })
       .catch(() => {
         clearTimeout(hardTimer);
+        signal?.removeEventListener('abort', abort);
         resolve(emptyScanResult(url));
       });
   });

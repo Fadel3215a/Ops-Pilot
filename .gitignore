@@ -2,3 +2,5 @@ node_modules/
 Ops-Pilot/
 
 .vercel
+dist/
+data/

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="OpsPilot AI Instant Audit - quantify revenue leakage from your storefront performance, payload bloat, and weak security headers."
+    />
+    <title>OpsPilot AI — Instant Revenue Audit</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__brand">
+        <span class="topbar__logo">OPS</span>
+        <span class="topbar__name">OPSPILOT AI</span>
+      </div>
+      <div class="topbar__tag">
+        <span class="dot dot--live"></span>
+        INSTANT AUDIT // ZERO AUTH
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <h1 class="hero__title">
+          Find the revenue your storefront is <span class="accent">silently leaking</span>
+        </h1>
+        <p class="hero__sub">
+          Drop in a public storefront URL. OpsPilot runs a client-side audit in seconds and
+          quantifies the operational drag in real dollars — no login, no waitlist.
+        </p>
+        <p class="hero__disclaimer">
+          Estimates assume a 50k monthly-visitor store at an $85 average order value with a 2.5%
+          baseline conversion rate. Tune the sliders to match your store.
+        </p>
+      </section>
+
+      <section id="form-mount" class="panel"></section>
+      <section id="banner-mount" class="panel banner-mount"></section>
+      <section id="metrics-mount" class="metrics-mount"></section>
+    </main>
+
+    <footer class="footer">
+      <span>OpsPilot AI — engineering-grade storefront telemetry.</span>
+      <span class="footer__right">Baseline model: latency / bloat / security vectors.</span>
+    </footer>
+
+    <div id="modal-mount"></div>
+
+    <script defer src="./ui.js"></script>
+  </body>
+</html>
