@@ -3,5 +3,11 @@
   "version": "1.0.0",
   "dependencies": {
     "resend": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "playwright": "^1.63.0",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
   }
 }
