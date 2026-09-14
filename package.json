@@ -25,6 +25,7 @@
     "test:github": "tsx src/patching/github/test.ts",
     "test:watchdog": "tsx src/watchdog/test.ts",
     "test:alerts": "tsx src/watchdog/test-alerts.ts",
+    "test:daemon": "tsx src/watchdog/test-daemon.ts",
     "verify": "node scripts/verify-ui.mjs",
     "verify:dashboard": "node scripts/verify-dashboard.mjs"
   }

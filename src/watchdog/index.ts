@@ -26,4 +26,19 @@ export {
   loadHistory,
   saveSnapshot,
 } from './history';
-export type { AuditSnapshot, MetricThresholds, WatchdogConfig } from './types';
+export type {
+  AuditSnapshot,
+  MetricThresholds,
+  WatchdogConfig,
+} from './types';
+export {
+  parseDaemonArgs,
+  runDaemonFromCli,
+  WatchdogDaemon,
+} from './daemon';
+export type {
+  DaemonCliArgs,
+  DaemonCliOverrides,
+  ScanProvider,
+  WatchdogDaemonOptions,
+} from './daemon';
