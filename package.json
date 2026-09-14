@@ -9,17 +9,19 @@
     "@types/node": "^26.5.1",
     "esbuild": "^0.28.2",
     "tsx": "^4.23.13",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "typescript5": "npm:typescript@^5.7.3"
   },
   "scripts": {
     "build": "node scripts/build-ui.mjs && node scripts/build-dashboard.mjs",
     "build:dashboard": "node scripts/build-dashboard.mjs",
     "dev": "node scripts/build-ui.mjs && node scripts/build-dashboard.mjs && tsx scripts/dev-server.ts",
     "start": "tsx scripts/dev-server.ts",
-    "typecheck": "tsc -p src/scanner/tsconfig.json --noEmit && tsc -p src/engine/tsconfig.json --noEmit && tsc -p src/ui/tsconfig.json --noEmit && tsc -p src/ui/dashboard/tsconfig.json --noEmit && tsc -p tsconfig.server.json && tsc -p src/telemetry/auth/tsconfig.json --noEmit && tsc -p src/telemetry/parser/tsconfig.json --noEmit && tsc -p src/remediation/tsconfig.json --noEmit",
+    "typecheck": "tsc -p src/scanner/tsconfig.json --noEmit && tsc -p src/engine/tsconfig.json --noEmit && tsc -p src/ui/tsconfig.json --noEmit && tsc -p src/ui/dashboard/tsconfig.json --noEmit && tsc -p tsconfig.server.json && tsc -p src/telemetry/auth/tsconfig.json --noEmit && tsc -p src/telemetry/parser/tsconfig.json --noEmit && tsc -p src/remediation/tsconfig.json --noEmit && tsc -p src/patching/ast/tsconfig.json --noEmit",
     "test:auth": "tsx src/telemetry/auth/test.ts",
     "test:parser": "tsx src/telemetry/parser/test.ts",
     "test:remediation": "tsx src/remediation/test.ts",
+    "test:patching": "tsx src/patching/ast/test.ts",
     "verify": "node scripts/verify-ui.mjs",
     "verify:dashboard": "node scripts/verify-dashboard.mjs"
   }
