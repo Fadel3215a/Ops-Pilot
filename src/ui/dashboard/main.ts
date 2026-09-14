@@ -1,13 +1,15 @@
 import { calculateLoss } from '../../engine';
+import { generateRemediationPlan } from '../../remediation';
 import { getAllMockSessions, validateAndCreateSession } from '../../telemetry/auth';
 import { AUTH_PROVIDER_KINDS, type AuthProviderKind, type ReadonlyAuthSession } from '../../telemetry/auth/types';
 import { parseLogs, RAW_LOGS_FIXTURE } from '../../telemetry/parser';
 import type { ParsedLogAnalysis } from '../../telemetry/parser/types';
+import { AiInsightsCard } from './components/AiInsightsCard';
 import { BackendWasteCard } from './components/BackendWasteCard';
 import { CombinedLossHero } from './components/CombinedLossHero';
 import { SessionStatusCard } from './components/SessionStatusCard';
 import { TelemetryStream } from './components/TelemetryStream';
-import { backendMonthlyUsd, SYNTHETIC_SCAN } from './seed';
+import { backendMonthlyUsd, performanceScoreFrom, SYNTHETIC_SCAN } from './seed';
 
 type AuthMode = 'mock' | 'live';
 
@@ -75,11 +77,15 @@ interface DashboardState {
 function main(): void {
   const loss = calculateLoss(SYNTHETIC_SCAN);
   const analysis = parseLogs(RAW_LOGS_FIXTURE);
+  const backendMonthly = backendMonthlyUsd(analysis.summary.totalBackendWasteUsd);
+  const combined = Math.round(loss.estimatedMonthlyLossUsd + backendMonthly);
+  const plan = generateRemediationPlan(loss, analysis);
 
   const hero = new CombinedLossHero(required('#hero-mount'));
   const sessionsCard = new SessionStatusCard(required('#sessions-mount'));
   const backend = new BackendWasteCard(required('#backend-mount'));
   const telemetry = new TelemetryStream(required('#telemetry-mount'));
+  const ai = new AiInsightsCard(required('#ai-mount'));
 
   const state: DashboardState = {
     mode: 'mock',
@@ -90,10 +96,20 @@ function main(): void {
   const toggle = required<HTMLButtonElement>('#auth-toggle');
   const toggleLabel = required('#auth-mode-label');
 
-  hero.setResult(loss, backendMonthlyUsd(analysis.summary.totalBackendWasteUsd));
+  hero.setResult(loss, backendMonthly);
   backend.setResult(analysis);
   telemetry.setLogs(analysis, RAW_LOGS_FIXTURE);
   sessionsCard.setActive('shopify');
+  void ai.setResult({
+    targetUrl: SYNTHETIC_SCAN.url,
+    combinedLossUsd: combined,
+    performanceScore: performanceScoreFrom(combined),
+    topFixes: plan.fixes.map((fix) => ({
+      id: fix.id,
+      name: fix.title,
+      monthlySavingsUsd: fix.monthlySavingsUsd,
+    })),
+  });
 
   async function applyMode(mode: AuthMode): Promise<void> {
     state.mode = mode;

@@ -42,3 +42,11 @@ export const SYNTHETIC_SCAN: ScanResult = {
 export function backendMonthlyUsd(batchWasteUsd: number): number {
   return Math.round(batchWasteUsd * BACKEND_MONTHLY_MULTIPLIER * 100) / 100;
 }
+
+export function performanceScoreFrom(
+  combinedLossUsd: number,
+  ceilingUsd = 20_000,
+): number {
+  const ratio = Math.min(1, Math.max(0, combinedLossUsd / Math.max(1, ceilingUsd)));
+  return Math.round((1 - ratio) * 100);
+}

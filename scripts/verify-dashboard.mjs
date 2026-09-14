@@ -93,6 +93,16 @@ async function main() {
     const mockPills = await page.getByTestId('auth-mode-label').count();
     check('Auth toggle label initializes to MOCK', mockPills === 1 && ((await page.getByTestId('auth-mode-label').textContent()) ?? '') === 'MOCK', await page.getByTestId('auth-mode-label').textContent());
 
+    const aiCard = await page.getByTestId('ai-card').count();
+    check('AI insights card renders', aiCard === 1);
+    const aiRisk = (await page.getByTestId('ai-risk').textContent()) ?? '';
+    check('AI risk level classifies the synthetic storefront', /HIGH|WARNING|CRITICAL/.test(aiRisk.trim().toUpperCase()), aiRisk.trim());
+    check('AI risk level flags the low-score storefront as critical', (aiRisk.trim().toUpperCase() === 'CRITICAL'), `${aiRisk.trim()} (score 24)`);
+    const aiHeadline = (await page.getByTestId('ai-headline').textContent()) ?? '';
+    check('AI headline renders a top-lever summary', aiHeadline.length > 0, aiHeadline.trim().slice(0, 60));
+    const aiActions = await page.getByTestId('ai-action').count();
+    check('AI action plan lists prioritized items', aiActions >= 2, `actions=${aiActions}`);
+
     await page.getByTestId('auth-toggle').click();
     await page.waitForTimeout(250);
     for (const provider of providers) {
