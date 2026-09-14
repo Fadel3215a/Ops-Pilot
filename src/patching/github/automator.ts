@@ -63,6 +63,7 @@ export function deriveBranchName(patches: GeneratedPatch[]): string {
 
 export interface RemediationPROptions {
   dryRun?: boolean;
+  fetchFn?: typeof fetch;
 }
 
 export async function createRemediationPR(
@@ -73,6 +74,7 @@ export async function createRemediationPR(
   const client = new GitHubClient({
     token: config.token,
     dryRun: options?.dryRun === true,
+    fetchFn: options?.fetchFn,
   });
   const owner = config.owner;
   const repo = config.repo;

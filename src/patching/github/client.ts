@@ -10,6 +10,7 @@ import type {
 export interface GitHubClientOptions {
   token: string;
   dryRun?: boolean;
+  fetchFn?: typeof fetch;
 }
 
 const API_ROOT = 'https://api.github.com';
@@ -24,9 +25,12 @@ export class GitHubClient {
 
   private readonly token: string;
 
+  private readonly fetchFn: typeof fetch;
+
   constructor(options: GitHubClientOptions) {
     this.token = options.token;
     this.dryRun = options.dryRun === true;
+    this.fetchFn = options.fetchFn ?? fetch;
   }
 
   async getRef(owner: string, repo: string, branch: string): Promise<string> {
@@ -110,7 +114,7 @@ export class GitHubClient {
     };
     if (body !== undefined) headers['Content-Type'] = 'application/json';
 
-    const response = await fetch(`${API_ROOT}${path}`, {
+    const response = await this.fetchFn(`${API_ROOT}${path}`, {
       method,
       headers,
       body: body === undefined ? undefined : JSON.stringify(body),

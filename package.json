@@ -17,7 +17,7 @@
     "build:dashboard": "node scripts/build-dashboard.mjs",
     "dev": "node scripts/build-ui.mjs && node scripts/build-dashboard.mjs && tsx scripts/dev-server.ts",
     "start": "tsx scripts/dev-server.ts",
-    "typecheck": "tsc -p src/scanner/tsconfig.json --noEmit && tsc -p src/engine/tsconfig.json --noEmit && tsc -p src/ui/tsconfig.json --noEmit && tsc -p src/ui/dashboard/tsconfig.json --noEmit && tsc -p tsconfig.server.json && tsc -p src/telemetry/auth/tsconfig.json --noEmit && tsc -p src/telemetry/parser/tsconfig.json --noEmit && tsc -p src/remediation/tsconfig.json --noEmit && tsc -p src/patching/ast/tsconfig.json --noEmit && tsc -p src/patching/github/tsconfig.json --noEmit && tsc -p src/watchdog/tsconfig.json --noEmit",
+    "typecheck": "tsc -p src/scanner/tsconfig.json --noEmit && tsc -p src/engine/tsconfig.json --noEmit && tsc -p src/ui/tsconfig.json --noEmit && tsc -p src/ui/dashboard/tsconfig.json --noEmit && tsc -p tsconfig.server.json && tsc -p src/telemetry/auth/tsconfig.json --noEmit && tsc -p src/telemetry/parser/tsconfig.json --noEmit && tsc -p src/remediation/tsconfig.json --noEmit && tsc -p src/patching/ast/tsconfig.json --noEmit && tsc -p src/patching/github/tsconfig.json --noEmit && tsc -p src/watchdog/tsconfig.json --noEmit && tsc -p src/cli/tsconfig.json --noEmit",
     "test:auth": "tsx src/telemetry/auth/test.ts",
     "test:parser": "tsx src/telemetry/parser/test.ts",
     "test:remediation": "tsx src/remediation/test.ts",
@@ -26,6 +26,7 @@
     "test:watchdog": "tsx src/watchdog/test.ts",
     "test:alerts": "tsx src/watchdog/test-alerts.ts",
     "test:daemon": "tsx src/watchdog/test-daemon.ts",
+    "test:cli": "tsx src/cli/test.ts",
     "verify": "node scripts/verify-ui.mjs",
     "verify:dashboard": "node scripts/verify-dashboard.mjs"
   }
