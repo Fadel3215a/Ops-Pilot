@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import {
   coerceScopeList,
   encodeScopes,
@@ -51,7 +50,7 @@ export function buildHubSpotAuthorizeUrl(options: {
     client_id: options.clientId,
     redirect_uri: options.redirectUri,
     scope: encodeScopes(options.scopes ?? HUBSPOT_READ_ONLY_SCOPES),
-    state: options.state ?? randomUUID(),
+    state: options.state ?? crypto.randomUUID(),
   });
   return `https://app.hubspot.com/oauth/authorize?${query.toString()}`;
 }

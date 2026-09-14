@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import {
   AUTH_PROVIDER_KINDS,
   isAuthProviderKind,

@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { makeSession } from './internal';
 import { SHOPIFY_READ_ONLY_SCOPES } from './providers/shopify';
 import { VERCEL_READ_ONLY_SCOPES } from './providers/vercel';

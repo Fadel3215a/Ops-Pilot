@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import {
   coerceScopeList,
   encodeScopes,
@@ -64,7 +63,7 @@ export function buildShopifyAuthorizeUrl(options: {
     client_id: options.clientId,
     scope: encodeScopes(options.scopes ?? SHOPIFY_READ_ONLY_SCOPES),
     redirect_uri: options.redirectUri,
-    state: options.state ?? randomUUID(),
+    state: options.state ?? crypto.randomUUID(),
   });
   return `https://${options.shopDomain}/admin/oauth/authorize?${query.toString()}`;
 }

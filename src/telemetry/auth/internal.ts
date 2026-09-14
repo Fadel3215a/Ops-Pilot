@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import type {
   AuthProviderKind,
   CredentialSummary,
@@ -60,7 +59,7 @@ export function makeSession(parts: SessionParts): ReadonlyAuthSession {
   const expiresAt = new Date(issuedAt.getTime() + parts.ttlMs);
   return {
     provider: parts.provider,
-    id: `ro-${parts.provider}-${randomUUID().slice(0, 8)}`,
+    id: `ro-${parts.provider}-${crypto.randomUUID().slice(0, 8)}`,
     readonly: true,
     mock: parts.mock,
     issuedAt: issuedAt.toISOString(),

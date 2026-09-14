@@ -12,12 +12,14 @@
     "typescript": "^7.0.2"
   },
   "scripts": {
-    "build": "node scripts/build-ui.mjs",
-    "dev": "node scripts/build-ui.mjs && tsx scripts/dev-server.ts",
+    "build": "node scripts/build-ui.mjs && node scripts/build-dashboard.mjs",
+    "build:dashboard": "node scripts/build-dashboard.mjs",
+    "dev": "node scripts/build-ui.mjs && node scripts/build-dashboard.mjs && tsx scripts/dev-server.ts",
     "start": "tsx scripts/dev-server.ts",
-    "typecheck": "tsc -p src/scanner/tsconfig.json --noEmit && tsc -p src/engine/tsconfig.json --noEmit && tsc -p src/ui/tsconfig.json --noEmit && tsc -p tsconfig.server.json && tsc -p src/telemetry/auth/tsconfig.json && tsc -p src/telemetry/parser/tsconfig.json",
+    "typecheck": "tsc -p src/scanner/tsconfig.json --noEmit && tsc -p src/engine/tsconfig.json --noEmit && tsc -p src/ui/tsconfig.json --noEmit && tsc -p src/ui/dashboard/tsconfig.json --noEmit && tsc -p tsconfig.server.json && tsc -p src/telemetry/auth/tsconfig.json && tsc -p src/telemetry/parser/tsconfig.json",
     "test:auth": "tsx src/telemetry/auth/test.ts",
     "test:parser": "tsx src/telemetry/parser/test.ts",
-    "verify": "node scripts/verify-ui.mjs"
+    "verify": "node scripts/verify-ui.mjs",
+    "verify:dashboard": "node scripts/verify-dashboard.mjs"
   }
 }

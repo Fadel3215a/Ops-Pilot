@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="OpsPilot AI Operations Dashboard - aggregate client-side conversion loss with backend log telemetry and read-only cloud sessions."
+    />
+    <title>OpsPilot AI — Operations Dashboard</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__brand">
+        <span class="topbar__logo">OPS</span>
+        <span class="topbar__name">OPSPILOT AI</span>
+      </div>
+      <div class="topbar__tag">
+        <span class="dot dot--live"></span>
+        OPERATIONS // READ-ONLY TELEMETRY
+      </div>
+      <button id="auth-toggle" class="btn btn--ghost btn--sm btn-toggle" data-testid="auth-toggle" type="button">
+        AUTH: <span id="auth-mode-label" data-testid="auth-mode-label">MOCK</span>
+      </button>
+    </header>
+
+    <main class="shell">
+      <section id="hero-mount" class="hero-mount"></section>
+      <section id="sessions-mount" class="sessions-mount"></section>
+      <section id="backend-mount" class="backend-mount"></section>
+      <section id="telemetry-mount" class="telemetry-mount"></section>
+    </main>
+
+    <footer class="footer">
+      <span>OpsPilot AI — operations dashboard.</span>
+      <span class="footer__right">Front-end: scanner + loss engine. Back-end: log parser.</span>
+    </footer>
+
+    <script defer src="./ui.js"></script>
+  </body>
+</html>
