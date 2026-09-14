@@ -3,18 +3,22 @@
   "version": "1.0.0",
   "dependencies": {
     "playwright": "^1.63.0",
-    "resend": "^2.0.0"
+    "resend": "^2.0.0",
+    "typescript5": "npm:typescript@^5.7.3"
   },
   "devDependencies": {
     "@types/node": "^26.5.1",
     "esbuild": "^0.28.2",
     "tsx": "^4.23.13",
-    "typescript": "^7.0.2",
-    "typescript5": "npm:typescript@^5.7.3"
+    "typescript": "^7.0.2"
+  },
+  "bin": {
+    "opspilot": "./dist/opspilot.cjs"
   },
   "scripts": {
-    "build": "node scripts/build-ui.mjs && node scripts/build-dashboard.mjs",
+    "build": "node scripts/build-ui.mjs && node scripts/build-dashboard.mjs && node scripts/build-cli.mjs",
     "build:dashboard": "node scripts/build-dashboard.mjs",
+    "build:cli": "node scripts/build-cli.mjs",
     "dev": "node scripts/build-ui.mjs && node scripts/build-dashboard.mjs && tsx scripts/dev-server.ts",
     "start": "tsx scripts/dev-server.ts",
     "typecheck": "tsc -p src/scanner/tsconfig.json --noEmit && tsc -p src/engine/tsconfig.json --noEmit && tsc -p src/ui/tsconfig.json --noEmit && tsc -p src/ui/dashboard/tsconfig.json --noEmit && tsc -p tsconfig.server.json && tsc -p src/telemetry/auth/tsconfig.json --noEmit && tsc -p src/telemetry/parser/tsconfig.json --noEmit && tsc -p src/remediation/tsconfig.json --noEmit && tsc -p src/patching/ast/tsconfig.json --noEmit && tsc -p src/patching/github/tsconfig.json --noEmit && tsc -p src/watchdog/tsconfig.json --noEmit && tsc -p src/cli/tsconfig.json --noEmit",
@@ -28,6 +32,7 @@
     "test:daemon": "tsx src/watchdog/test-daemon.ts",
     "test:cli": "tsx src/cli/test.ts",
     "verify": "node scripts/verify-ui.mjs",
-    "verify:dashboard": "node scripts/verify-dashboard.mjs"
+    "verify:dashboard": "node scripts/verify-dashboard.mjs",
+    "verify:cli": "node scripts/verify-cli.mjs"
   }
 }
