@@ -1,6 +1,9 @@
 node_modules/
-Ops-Pilot/
-
-.vercel
 dist/
 data/
+.env
+.env.local
+.env*.local
+.vercel/
+Ops-Pilot/
+*.tsbuildinfo
