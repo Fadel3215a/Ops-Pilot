@@ -66,7 +66,7 @@ function serveStatic(res: ServerResponse, pathname: string): void {
 }
 
 type RouteHandler = (
-  req: { method?: string; body?: unknown; on?: (event: string, handler: (...args: unknown[]) => void) => void },
+  req: { method?: string; url?: string; body?: unknown; on?: (event: string, handler: (...args: unknown[]) => void) => void },
   res: ServerResponse,
 ) => Promise<void>;
 
@@ -75,9 +75,10 @@ function bridge(handler: RouteHandler, req: IncomingMessage, res: ServerResponse
     .then((body) => {
       const bridgeReq: {
         method?: string;
+        url?: string;
         body?: unknown;
         on?: (event: string, handler: (...args: unknown[]) => void) => void;
-      } = { method: req.method, body };
+      } = { method: req.method, url: req.url, body };
       if (req.method === 'POST') {
         bridgeReq.on = (event: string, handler): void => {
           req.on(event as 'data' | 'end' | 'error', ((...args: unknown[]) => handler(...args)) as never);

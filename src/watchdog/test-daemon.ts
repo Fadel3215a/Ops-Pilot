@@ -66,16 +66,24 @@ function mockFetch(calls: WebhookCall[]): typeof fetch {
   }) as typeof fetch;
 }
 
-const TEMP_HISTORY = path.join(os.tmpdir(), 'watchdog-daemon.test.json');
+const TEMP_DIR = os.tmpdir();
+
+function tempHistoryFile(): string {
+  return path.join(
+    TEMP_DIR,
+    `watchdog-daemon.${process.pid}.${Math.random().toString(36).slice(2)}.json`,
+  );
+}
 
 async function withTempHistory<T>(
   fn: (file: string) => Promise<T>,
 ): Promise<T> {
-  await clearHistory(TEMP_HISTORY);
+  const file = tempHistoryFile();
+  await clearHistory(file);
   try {
-    return await fn(TEMP_HISTORY);
+    return await fn(file);
   } finally {
-    await rm(TEMP_HISTORY, { force: true });
+    await rm(file, { force: true });
   }
 }
 

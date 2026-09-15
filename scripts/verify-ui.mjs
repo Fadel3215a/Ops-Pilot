@@ -31,7 +31,11 @@ async function waitReady(base, timeoutMs) {
 const tsxCli = join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs');
 const devServer = spawn(process.execPath, [tsxCli, join(ROOT, 'scripts', 'dev-server.ts')], {
   cwd: ROOT,
-  env: { ...process.env, PORT: String(PORT) },
+  env: {
+    ...process.env,
+    PORT: String(PORT),
+    PAGESPEED_MOCK: process.env.PAGESPEED_API_KEY ? '0' : '1',
+  },
   stdio: ['ignore', 'pipe', 'pipe'],
 });
 
@@ -49,7 +53,7 @@ async function main() {
     await waitReady(BASE, 20000);
 
     const methodRes = await fetch(`${BASE}/api/scan`, { method: 'GET' });
-    check('API rejects GET /api/scan with 405', methodRes.status === 405, `status=${methodRes.status}`);
+    check('API requires a URL for GET /api/scan (400)', methodRes.status === 400, `status=${methodRes.status}`);
 
     const badBody = await fetch(`${BASE}/api/scan`, {
       method: 'POST',

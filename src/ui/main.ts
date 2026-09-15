@@ -1,19 +1,11 @@
 import { calculateLoss } from '../engine';
-import type { LossAnalysis, StoreBaseline } from '../engine/types';
+import type { StoreBaseline } from '../engine/types';
 import type { ScanResult } from '../scanner/types';
+import { scanUrlLive } from '../scanner/live-scanner';
 import { AuditForm } from './components/AuditForm';
 import { LossBanner } from './components/LossBanner';
 import { MetricBreakdown } from './components/MetricBreakdown';
 import { LeadCaptureModal } from './components/LeadCaptureModal';
-
-interface ApiScanResponse {
-  ok: boolean;
-  url?: string;
-  baseline?: StoreBaseline;
-  scan?: ScanResult;
-  loss?: LossAnalysis;
-  error?: string;
-}
 
 interface ApiLeadResponse {
   ok: boolean;
@@ -62,20 +54,16 @@ function main(): void {
     auditForm.setLoading(true);
     metrics.clear();
     try {
-      const response = await fetch('/api/scan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url, baseline: currentBaseline }),
-      });
-      const payload = (await response.json()) as ApiScanResponse;
-      if (!response.ok || payload.scan === undefined || payload.loss === undefined) {
-        throw new Error(payload.error ?? `HTTP ${response.status}`);
+      const scan = await scanUrlLive(url);
+      lastScan = scan;
+      if (scan.error) {
+        lossBanner.setError(scan.error);
+        return;
       }
-      lastScan = payload.scan;
-      const loss = payload.loss;
+      const loss = calculateLoss(scan, currentBaseline);
       lossBanner.setResult(loss);
-      metrics.render(payload.scan);
-      window.setTimeout(() => modal.show(payload.url ?? url), 350);
+      metrics.render(scan);
+      window.setTimeout(() => modal.show(url), 350);
     } catch (err) {
       lossBanner.setError(err instanceof Error ? err.message : String(err));
     } finally {
