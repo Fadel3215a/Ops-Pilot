@@ -20,7 +20,7 @@ async function main() {
     bundle: true,
     format: 'cjs',
     platform: 'node',
-    target: 'node18',
+    target: 'node22',
     minify: false,
     sourcemap: false,
     banner: { js: '#!/usr/bin/env node' },

@@ -15,6 +15,9 @@
   "bin": {
     "opspilot": "./dist/opspilot.cjs"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "build": "node scripts/build-ui.mjs && node scripts/build-dashboard.mjs && node scripts/build-cli.mjs",
     "build:dashboard": "node scripts/build-dashboard.mjs",

@@ -38,7 +38,7 @@ Scanner ──> Loss Engine ──> Telemetry Parser ──> Edge UI/Dashboard (
 
 ## Installation & Build
 
-Requires **Node.js 18+**.
+Requires **Node.js 22+**.
 
 ```bash
 npm install
